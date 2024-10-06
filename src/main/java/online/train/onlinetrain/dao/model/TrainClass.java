@@ -20,11 +20,9 @@ public class TrainClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trainClassId;
     private String className;
-//    @Column(columnDefinition = "TEXT")
-//    private String fare;
-@Embedded
-private Fare fare;
+    @Embedded
+    private Fare fare;
     private String title;
-    @OneToMany( mappedBy = "trainClass",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Station> stationList = new ArrayList<>();
+//    @OneToMany( mappedBy = "trainClass",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Station> stationList = new ArrayList<>();
 }

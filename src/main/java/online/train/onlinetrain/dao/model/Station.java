@@ -16,6 +16,9 @@ public class Station {
     private Long stationId;
     private String stationName;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trainClass_id")
-    private TrainClass trainClass;
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "trainClass_id")
+//    private TrainClass trainClass;
 }

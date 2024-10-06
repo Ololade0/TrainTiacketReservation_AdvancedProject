@@ -36,7 +36,7 @@ public class TrainClassServiceImpl implements TrainClassService {
             TrainClass trainClass = TrainClass.builder()
                     .className(request.getClassName())
                     .fare(request.getFare())
-                    .title(Title.TIS)
+                    .title(Title.LAGOS_IBADAN_TRAIN_SERVICE)
                     .build();
             trainClasses.add(trainClass);
         }

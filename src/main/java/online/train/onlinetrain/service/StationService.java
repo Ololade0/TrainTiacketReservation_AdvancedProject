@@ -4,5 +4,5 @@ import online.train.onlinetrain.dao.model.Station;
 
 public interface StationService {
 
-    public Station addStation(Station station);
+     Station addStation(Station station);
 }
