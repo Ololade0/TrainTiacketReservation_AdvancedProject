@@ -1,10 +1,9 @@
 package online.train.onlinetrain.controller;
 
-import online.train.onlinetrain.dao.model.Station;
 import online.train.onlinetrain.dao.model.TrainClass;
 import online.train.onlinetrain.dto.request.TrainClassRequest;
+import online.train.onlinetrain.exception.TrainClassCannotBeFoundException;
 import online.train.onlinetrain.service.TrainClassService;
-import online.train.onlinetrain.dto.response.TrainClassResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class TrainClassController {
 
 }
     @GetMapping("/{trainClassId}")
-    public ResponseEntity<?>findTrainClassById(@PathVariable Long trainClassId){
+    public ResponseEntity<?>findTrainClassById(@PathVariable Long trainClassId) throws TrainClassCannotBeFoundException {
        return new ResponseEntity<>(trainClassService.findTrainClassById(trainClassId), HttpStatus.OK);
     }
 

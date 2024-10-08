@@ -24,8 +24,7 @@ public class TrainClassServiceImpl implements TrainClassService {
     @Autowired
     private TrainClassRepository trainClassRepository;
 
-    @Autowired
-    private StationService stationService;
+
 
 
 
@@ -46,7 +45,7 @@ public class TrainClassServiceImpl implements TrainClassService {
 
 
     @Override
-    public TrainClass findTrainClassById(Long trainClassId) {
+    public TrainClass findTrainClassById(Long trainClassId) throws TrainClassCannotBeFoundException {
         Optional<TrainClass> foundTrainClass = trainClassRepository.findById(trainClassId);
         if(foundTrainClass.isPresent()){
             return foundTrainClass.get();
