@@ -16,4 +16,6 @@ public interface ScheduleService {
     Optional<Schedule> findSchedule(Long schedule);
 
     Schedule updateSchedule(Schedule createdSchedule, Long scheduleId) throws ScheduleCannotBeFoundException;
+
+     List<Schedule> findAllSchedule();
 }

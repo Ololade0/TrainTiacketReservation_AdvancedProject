@@ -2,6 +2,7 @@ package online.train.onlinetrain.controller;
 import online.train.onlinetrain.dao.model.Schedule;
 import online.train.onlinetrain.exception.InvalidScheduleException;
 import online.train.onlinetrain.exception.ScheduleDetailsException;
+import online.train.onlinetrain.exception.TrainClassCannotBeFoundException;
 import online.train.onlinetrain.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,8 +28,6 @@ public class ScheduleController {
                 List<Schedule> schedules = scheduleService.createSchedules(date);
                 return new ResponseEntity<>(schedules, HttpStatus.CREATED);
 //            }
-//            catch (Exception e) {
-//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
             } catch (InvalidScheduleException | ScheduleDetailsException e) {
                 throw new RuntimeException(e);
@@ -36,5 +35,18 @@ public class ScheduleController {
 
 
         }
-}
+
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<?>findSchduleById(@PathVariable Long scheduleId) {
+        return new ResponseEntity<>(scheduleService.findSchedule(scheduleId), HttpStatus.OK);
+    }
+
+    @GetMapping("/findall")
+    public ResponseEntity<?>findAllSchedule() {
+        return new ResponseEntity<>(scheduleService.findAllSchedule(), HttpStatus.OK);
+    }
+
+    }
+
+
 

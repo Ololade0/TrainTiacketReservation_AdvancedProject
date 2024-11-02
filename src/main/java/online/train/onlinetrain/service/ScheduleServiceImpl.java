@@ -100,7 +100,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
         LocalDate currentDate = LocalDate.now();
         if (date.isEqual(currentDate) || date.isBefore(currentDate)) {
-            throw new ScheduleDetailsException("The departure date must be at least 2 days in advance.");
+            throw new ScheduleDetailsException("The departure date must be at least 2 days in advance. or you cannot schedule a train for a past date ");
         }
 
         LocalDate minScheduleDate = currentDate.plusDays(2);
@@ -142,6 +142,11 @@ public class ScheduleServiceImpl implements ScheduleService{
           return scheduleRepository.save(foundSchedule.get());
       }
         throw new ScheduleCannotBeFoundException("Schedule cannot Be found");
+    }
+
+    @Override
+    public List<Schedule> findAllSchedule() {
+        return scheduleRepository.findAll();
     }
 
 }
