@@ -1,24 +1,27 @@
 package online.train.onlinetrain.controller;
-import online.train.onlinetrain.service.DistanceService;
+import online.train.onlinetrain.service.DistanceCalculatorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-    @RestController
-    public class DistanceController {
+@RestController
+@RequestMapping("api/distance")
+public class DistanceController {
 
-        private final DistanceService distanceService;
+    @Autowired
+    private DistanceCalculatorService distanceCalculatorService;
 
-        public DistanceController(DistanceService distanceService) {
-            this.distanceService = distanceService;
-        }
-
-        @GetMapping("/distance")
-        public double getDistance(
-                @RequestParam double startLat,
-                @RequestParam double startLon,
-                @RequestParam double endLat,
-                @RequestParam double endLon) {
-            return distanceService.calculateDistance(startLat, startLon, endLat, endLon);
-        }
+    public DistanceController(DistanceCalculatorService distanceCalculatorService) {
+        this.distanceCalculatorService = distanceCalculatorService;
     }
+
+    @GetMapping("/distance")
+    public ResponseEntity<?> getDistance() {
+        return new ResponseEntity<>(distanceCalculatorService.calculateDistance(), HttpStatus.OK);
+    }
+}
+

@@ -1,4 +1,5 @@
 package online.train.onlinetrain.service;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -8,28 +9,33 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DistanceService {
+public class DistanceCalculatorService {
 
-    @Value("${ors.api.key}")
-    private String apiKey;
+    private final RestTemplate restTemplate;
 
-    @Value("${ors.base.url}")
+    @Value("${api.baseUrl}")
     private String baseUrl;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${api.key}")
+    private String apiKey;
 
-    public double calculateDistance(double startLat, double startLon, double endLat, double endLon) {
+    public DistanceCalculatorService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public String calculateDistance() {
         String url = UriComponentsBuilder.fromHttpUrl(baseUrl + "/v2/directions/driving-car")
                 .queryParam("api_key", apiKey)
                 .toUriString();
 
-        // Define the request payload
         Map<String, Object> requestPayload = Map.of(
-                "coordinates", new double[][]{{startLon, startLat}, {endLon, endLat}},
+                "coordinates", new double[][]{
+                        {CityCoordinates.IBADAN_LONGITUDE, CityCoordinates.IBADAN_LATITUDE},
+                        {CityCoordinates.LAGOS_LONGITUDE, CityCoordinates.LAGOS_LATITUDE}
+                },
                 "units", "km"
         );
 
-        // Make the request
         Map<String, Object> response = restTemplate.postForObject(url, requestPayload, Map.class);
 
         if (response != null && response.containsKey("routes")) {
@@ -37,10 +43,13 @@ public class DistanceService {
             if (!routes.isEmpty()) {
                 Map<String, Object> route = routes.get(0);
                 Map<String, Object> summary = (Map<String, Object>) route.get("summary");
-                return (double) summary.get("distance");
+                double distance =(double) summary.get("distance");
+                return distance +  " km";
             }
         }
 
         throw new RuntimeException("Unable to calculate distance");
     }
 }
+
+
